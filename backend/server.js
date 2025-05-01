@@ -22,6 +22,7 @@ app.post('/posts', async (req, res) => {
          slug: req.body.slug,
          title: req.body.title,
          body: req.body.body,
+         test: req.body.test
       }
    })
    res.status(201).json(req.body);
@@ -56,6 +57,7 @@ app.put('/posts/:id', async (req, res) => {
          slug: req.body.slug,
          title: req.body.title,
          body: req.body.body,
+         test: req.body.test
       }
    });
 

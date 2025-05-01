@@ -838,6 +838,7 @@ export namespace Prisma {
     slug: string | null
     title: string | null
     body: string | null
+    createdAt: Date | null
   }
 
   export type PostMaxAggregateOutputType = {
@@ -845,6 +846,7 @@ export namespace Prisma {
     slug: string | null
     title: string | null
     body: string | null
+    createdAt: Date | null
   }
 
   export type PostCountAggregateOutputType = {
@@ -852,6 +854,7 @@ export namespace Prisma {
     slug: number
     title: number
     body: number
+    createdAt: number
     _all: number
   }
 
@@ -861,6 +864,7 @@ export namespace Prisma {
     slug?: true
     title?: true
     body?: true
+    createdAt?: true
   }
 
   export type PostMaxAggregateInputType = {
@@ -868,6 +872,7 @@ export namespace Prisma {
     slug?: true
     title?: true
     body?: true
+    createdAt?: true
   }
 
   export type PostCountAggregateInputType = {
@@ -875,6 +880,7 @@ export namespace Prisma {
     slug?: true
     title?: true
     body?: true
+    createdAt?: true
     _all?: true
   }
 
@@ -955,6 +961,7 @@ export namespace Prisma {
     slug: string
     title: string
     body: string
+    createdAt: Date
     _count: PostCountAggregateOutputType | null
     _min: PostMinAggregateOutputType | null
     _max: PostMaxAggregateOutputType | null
@@ -979,6 +986,7 @@ export namespace Prisma {
     slug?: boolean
     title?: boolean
     body?: boolean
+    createdAt?: boolean
   }, ExtArgs["result"]["post"]>
 
 
@@ -988,9 +996,10 @@ export namespace Prisma {
     slug?: boolean
     title?: boolean
     body?: boolean
+    createdAt?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "body", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "body" | "createdAt", ExtArgs["result"]["post"]>
 
   export type $PostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Post"
@@ -1000,6 +1009,7 @@ export namespace Prisma {
       slug: string
       title: string
       body: string
+      createdAt: Date
     }, ExtArgs["result"]["post"]>
     composites: {}
   }
@@ -1396,6 +1406,7 @@ export namespace Prisma {
     readonly slug: FieldRef<"Post", 'String'>
     readonly title: FieldRef<"Post", 'String'>
     readonly body: FieldRef<"Post", 'String'>
+    readonly createdAt: FieldRef<"Post", 'DateTime'>
   }
     
 
@@ -1752,7 +1763,8 @@ export namespace Prisma {
     id: 'id',
     slug: 'slug',
     title: 'title',
-    body: 'body'
+    body: 'body',
+    createdAt: 'createdAt'
   };
 
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
@@ -1794,6 +1806,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1818,6 +1844,7 @@ export namespace Prisma {
     slug?: StringFilter<"Post"> | string
     title?: StringFilter<"Post"> | string
     body?: StringFilter<"Post"> | string
+    createdAt?: DateTimeFilter<"Post"> | Date | string
   }
 
   export type PostOrderByWithRelationInput = {
@@ -1825,6 +1852,7 @@ export namespace Prisma {
     slug?: SortOrder
     title?: SortOrder
     body?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type PostWhereUniqueInput = Prisma.AtLeast<{
@@ -1835,6 +1863,7 @@ export namespace Prisma {
     NOT?: PostWhereInput | PostWhereInput[]
     title?: StringFilter<"Post"> | string
     body?: StringFilter<"Post"> | string
+    createdAt?: DateTimeFilter<"Post"> | Date | string
   }, "id" | "slug">
 
   export type PostOrderByWithAggregationInput = {
@@ -1842,6 +1871,7 @@ export namespace Prisma {
     slug?: SortOrder
     title?: SortOrder
     body?: SortOrder
+    createdAt?: SortOrder
     _count?: PostCountOrderByAggregateInput
     _max?: PostMaxOrderByAggregateInput
     _min?: PostMinOrderByAggregateInput
@@ -1855,6 +1885,7 @@ export namespace Prisma {
     slug?: StringWithAggregatesFilter<"Post"> | string
     title?: StringWithAggregatesFilter<"Post"> | string
     body?: StringWithAggregatesFilter<"Post"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
   }
 
   export type PostCreateInput = {
@@ -1862,6 +1893,7 @@ export namespace Prisma {
     slug: string
     title: string
     body: string
+    createdAt: Date | string
   }
 
   export type PostUncheckedCreateInput = {
@@ -1869,18 +1901,21 @@ export namespace Prisma {
     slug: string
     title: string
     body: string
+    createdAt: Date | string
   }
 
   export type PostUpdateInput = {
     slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PostUncheckedUpdateInput = {
     slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PostCreateManyInput = {
@@ -1888,18 +1923,21 @@ export namespace Prisma {
     slug: string
     title: string
     body: string
+    createdAt: Date | string
   }
 
   export type PostUpdateManyMutationInput = {
     slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PostUncheckedUpdateManyInput = {
     slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -1917,11 +1955,23 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type PostCountOrderByAggregateInput = {
     id?: SortOrder
     slug?: SortOrder
     title?: SortOrder
     body?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type PostMaxOrderByAggregateInput = {
@@ -1929,6 +1979,7 @@ export namespace Prisma {
     slug?: SortOrder
     title?: SortOrder
     body?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type PostMinOrderByAggregateInput = {
@@ -1936,6 +1987,7 @@ export namespace Prisma {
     slug?: SortOrder
     title?: SortOrder
     body?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -1956,8 +2008,26 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -1972,6 +2042,17 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2000,6 +2081,20 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
 
