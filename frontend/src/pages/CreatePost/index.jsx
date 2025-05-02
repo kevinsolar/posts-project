@@ -6,19 +6,16 @@ const CreatePost = () => {
 
    const inputTitle = useRef();
    const inputBody = useRef();
-   const inputTest = useRef();
 
    async function createPosts() {
       const titleValue = inputTitle.current.value;
       const bodyValue = inputBody.current.value;
-      const testValue = inputTest.current.value;
       const generatedSlug = transformSlug(titleValue);
 
       await api.post('/posts', {
          slug: generatedSlug,
          title: titleValue,
          body: bodyValue,
-         test: testValue
       });
    }
 
@@ -37,11 +34,6 @@ const CreatePost = () => {
                   name="title" type="text"
                   className="w-full bg-cyan-100 placeholder-stone-500 py-1 px-2 rounded-sm"
                   ref={inputTitle} />
-               <input
-                  placeholder="Teste"
-                  name="test" type="text"
-                  className="w-full bg-cyan-100 placeholder-stone-500 py-1 px-2 rounded-sm"
-                  ref={inputTest} />
                <textarea
                   placeholder="O que esta pensando?"
                   name="body"

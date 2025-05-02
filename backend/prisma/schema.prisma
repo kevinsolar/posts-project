@@ -19,5 +19,5 @@ model Post {
   slug     String    @unique
   title    String
   body     String
-  createdAt DateTime
+  createdAt DateTime?
 }
