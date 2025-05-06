@@ -11,11 +11,13 @@ const CreatePost = () => {
       const titleValue = inputTitle.current.value;
       const bodyValue = inputBody.current.value;
       const generatedSlug = transformSlug(titleValue);
+      const date = new Date();
 
       await api.post('/posts', {
          slug: generatedSlug,
          title: titleValue,
          body: bodyValue,
+         createdAt: date
       });
    }
 
