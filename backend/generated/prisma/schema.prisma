@@ -21,3 +21,10 @@ model Post {
   body      String
   createdAt DateTime?
 }
+
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  email    String @unique
+  name     String
+  password String
+}
