@@ -928,6 +928,7 @@ export namespace Prisma {
     id: string | null
     slug: string | null
     title: string | null
+    imgpath: string | null
     body: string | null
     createdAt: Date | null
   }
@@ -936,6 +937,7 @@ export namespace Prisma {
     id: string | null
     slug: string | null
     title: string | null
+    imgpath: string | null
     body: string | null
     createdAt: Date | null
   }
@@ -944,6 +946,7 @@ export namespace Prisma {
     id: number
     slug: number
     title: number
+    imgpath: number
     body: number
     createdAt: number
     _all: number
@@ -954,6 +957,7 @@ export namespace Prisma {
     id?: true
     slug?: true
     title?: true
+    imgpath?: true
     body?: true
     createdAt?: true
   }
@@ -962,6 +966,7 @@ export namespace Prisma {
     id?: true
     slug?: true
     title?: true
+    imgpath?: true
     body?: true
     createdAt?: true
   }
@@ -970,6 +975,7 @@ export namespace Prisma {
     id?: true
     slug?: true
     title?: true
+    imgpath?: true
     body?: true
     createdAt?: true
     _all?: true
@@ -1051,6 +1057,7 @@ export namespace Prisma {
     id: string
     slug: string
     title: string
+    imgpath: string
     body: string
     createdAt: Date | null
     _count: PostCountAggregateOutputType | null
@@ -1076,6 +1083,7 @@ export namespace Prisma {
     id?: boolean
     slug?: boolean
     title?: boolean
+    imgpath?: boolean
     body?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["post"]>
@@ -1086,11 +1094,12 @@ export namespace Prisma {
     id?: boolean
     slug?: boolean
     title?: boolean
+    imgpath?: boolean
     body?: boolean
     createdAt?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "body" | "createdAt", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "imgpath" | "body" | "createdAt", ExtArgs["result"]["post"]>
 
   export type $PostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Post"
@@ -1099,6 +1108,7 @@ export namespace Prisma {
       id: string
       slug: string
       title: string
+      imgpath: string
       body: string
       createdAt: Date | null
     }, ExtArgs["result"]["post"]>
@@ -1496,6 +1506,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Post", 'String'>
     readonly slug: FieldRef<"Post", 'String'>
     readonly title: FieldRef<"Post", 'String'>
+    readonly imgpath: FieldRef<"Post", 'String'>
     readonly body: FieldRef<"Post", 'String'>
     readonly createdAt: FieldRef<"Post", 'DateTime'>
   }
@@ -2775,6 +2786,7 @@ export namespace Prisma {
     id: 'id',
     slug: 'slug',
     title: 'title',
+    imgpath: 'imgpath',
     body: 'body',
     createdAt: 'createdAt'
   };
@@ -2865,6 +2877,7 @@ export namespace Prisma {
     id?: StringFilter<"Post"> | string
     slug?: StringFilter<"Post"> | string
     title?: StringFilter<"Post"> | string
+    imgpath?: StringFilter<"Post"> | string
     body?: StringFilter<"Post"> | string
     createdAt?: DateTimeNullableFilter<"Post"> | Date | string | null
   }
@@ -2873,6 +2886,7 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     title?: SortOrder
+    imgpath?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
   }
@@ -2884,6 +2898,7 @@ export namespace Prisma {
     OR?: PostWhereInput[]
     NOT?: PostWhereInput | PostWhereInput[]
     title?: StringFilter<"Post"> | string
+    imgpath?: StringFilter<"Post"> | string
     body?: StringFilter<"Post"> | string
     createdAt?: DateTimeNullableFilter<"Post"> | Date | string | null
   }, "id" | "slug">
@@ -2892,6 +2907,7 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     title?: SortOrder
+    imgpath?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
     _count?: PostCountOrderByAggregateInput
@@ -2906,6 +2922,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Post"> | string
     slug?: StringWithAggregatesFilter<"Post"> | string
     title?: StringWithAggregatesFilter<"Post"> | string
+    imgpath?: StringWithAggregatesFilter<"Post"> | string
     body?: StringWithAggregatesFilter<"Post"> | string
     createdAt?: DateTimeNullableWithAggregatesFilter<"Post"> | Date | string | null
   }
@@ -2961,6 +2978,7 @@ export namespace Prisma {
     id?: string
     slug: string
     title: string
+    imgpath: string
     body: string
     createdAt?: Date | string | null
   }
@@ -2969,6 +2987,7 @@ export namespace Prisma {
     id?: string
     slug: string
     title: string
+    imgpath: string
     body: string
     createdAt?: Date | string | null
   }
@@ -2976,6 +2995,7 @@ export namespace Prisma {
   export type PostUpdateInput = {
     slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    imgpath?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -2983,6 +3003,7 @@ export namespace Prisma {
   export type PostUncheckedUpdateInput = {
     slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    imgpath?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -2991,6 +3012,7 @@ export namespace Prisma {
     id?: string
     slug: string
     title: string
+    imgpath: string
     body: string
     createdAt?: Date | string | null
   }
@@ -2998,6 +3020,7 @@ export namespace Prisma {
   export type PostUpdateManyMutationInput = {
     slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    imgpath?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -3005,6 +3028,7 @@ export namespace Prisma {
   export type PostUncheckedUpdateManyInput = {
     slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    imgpath?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -3085,6 +3109,7 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     title?: SortOrder
+    imgpath?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
   }
@@ -3093,6 +3118,7 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     title?: SortOrder
+    imgpath?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
   }
@@ -3101,6 +3127,7 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     title?: SortOrder
+    imgpath?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
   }

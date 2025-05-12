@@ -30,6 +30,7 @@ app.post("/posts", async (req, res) => {
 		data: {
 			slug: req.body.slug,
 			title: req.body.title,
+         imgpath: req.body.imgpath,
 			body: req.body.body,
 			createdAt: req.body.createdAt,
 		},
@@ -65,6 +66,7 @@ app.put("/posts/:id", async (req, res) => {
 		data: {
 			slug: req.body.slug,
 			title: req.body.title,
+         imgpath: req.body.imgpath,
 			body: req.body.body,
 			createdAt: req.body.createdAt,
 		},

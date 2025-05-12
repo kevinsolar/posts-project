@@ -114,6 +114,7 @@ exports.Prisma.PostScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
   title: 'title',
+  imgpath: 'imgpath',
   body: 'body',
   createdAt: 'createdAt'
 };
