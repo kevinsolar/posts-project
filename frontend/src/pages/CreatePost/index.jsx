@@ -21,7 +21,7 @@ const CreatePost = () => {
       formData.append('slug', generatedSlug);
       formData.append('title', titleValue);
       formData.append('body', bodyValue);
-      formData.append('createdAt', date);
+      formData.append('createdAt', date.toISOString());
       
       if (imageFile) {
          formData.append('image', imageFile);

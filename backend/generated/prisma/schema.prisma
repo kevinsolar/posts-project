@@ -18,7 +18,7 @@ model Post {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
   slug      String    @unique
   title     String
-  imgpath   String
+  imgpath   String?
   body      String
   createdAt DateTime?
 }
