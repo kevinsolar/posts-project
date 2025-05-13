@@ -3,6 +3,7 @@ import './App.css'
 import Home from './pages/Home'
 import CreatePost from './pages/CreatePost'
 import User from './pages/User'
+import EditPost from './pages/EditPost'
 
 function App() {
    return (
@@ -10,6 +11,7 @@ function App() {
          <Route path="/" element={<Home />} />
          <Route path="/criar" element={<CreatePost />} />
          <Route path="/user" element={<User />} />
+         <Route path="/edit/:id" element={<EditPost />} />
       </Routes>
    )
 }

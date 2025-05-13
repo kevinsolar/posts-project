@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import BotaoEditar from "../../components/BotaoEditar";
 import BotaoExcluir from "../../components/BotaoExcluir";
 import api from "../../services/api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
+   const navigate = useNavigate();
    const [posts, setPosts] = useState([]);
    let dateF;
 
@@ -50,7 +51,7 @@ const Home = () => {
                   >
                      {post.imgpath && (
                         <div className="img">
-                           <img src={post.imgpath} alt="Imagem do post" className="w-full rounded-md object-contain bg-white p-1" />
+                           <img src={post.imgpath} alt="Imagem do post" className="w-full rounded-md object-contain" />
                         </div>
                      )}
 
@@ -68,7 +69,7 @@ const Home = () => {
                      <div className="actions flex gap-3 justify-center">
                         <BotaoEditar
                            onClick={() => {
-                              console.log("Edit!");
+                              navigate(`/edit/${post.id}`);
                            }}
                         >
                            Editar

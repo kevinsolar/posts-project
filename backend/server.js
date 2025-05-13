@@ -28,49 +28,49 @@ app.use(express.json()); //Por padrao o express nao entende json, por isso preci
 app.use(cors()); //Permite que o front-end acesse o back-end.
 
 app.get("/posts", async (req, res) => {
-   //utilizando o query params para fazer um filtro
-   let posts = [];
+	//utilizando o query params para fazer um filtro
+	let posts = [];
 
-   if (req.query) {
-      posts = await prisma.post.findMany({
-         where: {
-            title: {
-               contains: req.query.title,
-            },
-            id: req.query.id,
-         },
-      });
-   } else {
-      posts = await prisma.post.findMany();
-   }
+	if (req.query) {
+		posts = await prisma.post.findMany({
+			where: {
+				title: {
+					contains: req.query.title,
+				},
+				id: req.query.id,
+			},
+		});
+	} else {
+		posts = await prisma.post.findMany();
+	}
 
-   res.status(200).json(posts); //Retorna todos os posts
+	res.status(200).json(posts); //Retorna todos os posts
 });
 
 app.put("/posts/:id", async (req, res) => {
-   await prisma.post.update({
-      where: {
-         id: req.params.id,
-      },
-      data: {
-         slug: req.body.slug,
-         title: req.body.title,
-         imgpath: req.body.imgpath,
-         body: req.body.body,
-         createdAt: req.body.createdAt,
-      },
-   });
+	await prisma.post.update({
+		where: {
+			id: req.params.id,
+		},
+		data: {
+			slug: req.body.slug,
+			title: req.body.title,
+			imgpath: req.body.imgpath,
+			body: req.body.body,
+			createdAt: req.body.createdAt,
+		},
+	});
 
-   res.status(201).json(req.body);
+	res.status(201).json(req.body);
 });
 
 app.delete("/posts/:id", async (req, res) => {
-   await prisma.post.delete({
-      where: {
-         id: req.params.id,
-      },
-   });
-   res.status(200).json({ message: "Deletado com sucesso!" });
+	await prisma.post.delete({
+		where: {
+			id: req.params.id,
+		},
+	});
+	res.status(200).json({ message: "Deletado com sucesso!" });
 });
 
 /*
@@ -78,60 +78,70 @@ app.delete("/posts/:id", async (req, res) => {
   * 
 */
 app.post("/users", async (req, res) => {
-   await prisma.user.create({
-      data: {
-         name: req.body.name,
-         email: req.body.email,
-         password: req.body.password,
-      },
-   });
-   res.status(201).json(req.body);
+	await prisma.user.create({
+		data: {
+			name: req.body.name,
+			email: req.body.email,
+			password: req.body.password,
+		},
+	});
+	res.status(201).json(req.body);
 });
 
 app.get("/users", async (req, res) => {
-   let users = []; //Criando um array vazio para armazenar os usuarios encontrados no banco de dados
+	let users = []; //Criando um array vazio para armazenar os usuarios encontrados no banco de dados
 
-   if (req.query) {
-      users = await prisma.user.findMany({
-         where: {
-            name: {
-               contains: req.query.name,
-            },
-            id: req.query.id,
-         },
-      });
-   } else {
-      users = await prisma.user.findMany();
-   }
+	if (req.query) {
+		users = await prisma.user.findMany({
+			where: {
+				name: {
+					contains: req.query.name,
+				},
+				id: req.query.id,
+			},
+		});
+	} else {
+		users = await prisma.user.findMany();
+	}
 
-   res.status(200).json(users);
+	res.status(200).json(users);
 });
 
 const port = 3000;
 app.listen(port, () => {
-   console.log(`Servidor rodando na porta ${port}`);
+	console.log(`Servidor rodando na porta ${port}`);
 });
-
 
 // Configuração do multer para salvar as imagens na pasta uploads/
 const storage = multer.diskStorage({
-   destination: function (req, file, cb) {
-      cb(null, "../frontend/public/uploads/");
-   },
-   filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9);
-      cb(null, uniqueSuffix + path.extname(file.originalname));
-   }
+	destination: function (req, file, cb) {
+		cb(null, "../frontend/public/uploads/");
+	},
+	filename: function (req, file, cb) {
+      const originalName = path.parse(file.originalname).name;
+
+		const date = new Date();
+		const day = String(date.getDate()).padStart(2, "0");
+		const month = String(date.getMonth() + 1).padStart(2, "0");
+		const year = String(date.getFullYear());
+
+		const uniqueSuffix = `${originalName}_${day}-${month}-${year}`;
+		cb(null, uniqueSuffix + path.extname(file.originalname));
+	},
 });
 const upload = multer({ storage: storage });
 
 // Certifique-se de servir a pasta uploads como estática
 app.use("/uploads", express.static("../frontend/public/uploads"));
 
-// Altere o endpoint para aceitar upload de arquivo
-app.post("/posts", upload.single("image"), async (req, res) => {
-   const imgpath = req.file ? `/uploads/${req.file.filename}` : "";
-   await prisma.post.create({
+// Modificar o endpoint PUT para aceitar upload de arquivo
+app.put("/posts/:id", upload.single("image"), async (req, res) => {
+   const imgpath = req.file ? `/uploads/${req.file.filename}` : req.body.imgpath;
+   
+   await prisma.post.update({
+      where: {
+         id: req.params.id,
+      },
       data: {
          slug: req.body.slug,
          title: req.body.title,
@@ -140,5 +150,20 @@ app.post("/posts", upload.single("image"), async (req, res) => {
          createdAt: req.body.createdAt,
       },
    });
+
    res.status(201).json({ ...req.body, imgpath });
+});
+
+app.post("/posts", upload.single("image"), async (req, res) => {
+	const imgpath = req.file ? `/uploads/${req.file.filename}` : "";
+	await prisma.post.create({
+		data: {
+			slug: req.body.slug,
+			title: req.body.title,
+			imgpath: imgpath,
+			body: req.body.body,
+			createdAt: req.body.createdAt,
+		},
+	});
+	res.status(201).json({ ...req.body, imgpath });
 });

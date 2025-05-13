@@ -1,0 +1,160 @@
+import { useEffect, useRef, useState } from "react";
+import api from "../../services/api";
+import { Link, useParams, useNavigate } from "react-router-dom";
+
+const EditPost = () => {
+   const { id } = useParams();
+   const navigate = useNavigate();
+   
+   const inputTitle = useRef();
+   const inputBody = useRef();
+   const inputImage = useRef();
+   const [imagePreview, setImagePreview] = useState(null);
+   const [post, setPost] = useState(null);
+   const [loading, setLoading] = useState(true);
+
+   useEffect(() => {
+      async function fetchPost() {
+         try {
+            const response = await api.get(`/posts?id=${id}`);
+            if (response.data && response.data.length > 0) {
+               setPost(response.data[0]);
+               setImagePreview(response.data[0].imgpath || null);
+            } else {
+               alert("Post não encontrado!");
+               navigate("/");
+            }
+         } catch (error) {
+            console.error("Erro ao buscar post:", error);
+            alert("Erro ao buscar o post. Redirecionando para a página inicial.");
+            navigate("/");
+         } finally {
+            setLoading(false);
+         }
+      }
+
+      fetchPost();
+   }, [id, navigate]);
+
+   async function updatePost() {
+      if (!post) return;
+
+      const titleValue = inputTitle.current.value;
+      const bodyValue = inputBody.current.value;
+      const generatedSlug = transformSlug(titleValue);
+      const imageFile = inputImage.current.files[0];
+
+      try {
+         if (imageFile) {
+            // Se tiver uma nova imagem, usamos FormData
+            const formData = new FormData();
+            formData.append('slug', generatedSlug);
+            formData.append('title', titleValue);
+            formData.append('body', bodyValue);
+            formData.append('createdAt', post.createdAt);
+            formData.append('image', imageFile);
+
+            await api.put(`/posts/${id}`, formData, {
+               headers: {
+                  'Content-Type': 'multipart/form-data'
+               }
+            });
+         } else {
+            // Se não tiver nova imagem, enviamos JSON normal
+            await api.put(`/posts/${id}`, {
+               slug: generatedSlug,
+               title: titleValue,
+               body: bodyValue,
+               imgpath: post.imgpath,
+               createdAt: post.createdAt
+            });
+         }
+         
+         alert("Post atualizado com sucesso!");
+         navigate("/");
+      } catch (error) {
+         console.error("Erro ao atualizar post:", error);
+         alert("Erro ao atualizar o post. Tente novamente.");
+      }
+   }
+
+   function transformSlug(title) {
+      return title.toLowerCase().replace(/ /g, '-');
+   }
+
+   function handleImageChange(e) {
+      const file = e.target.files[0];
+      if (file) {
+         const reader = new FileReader();
+         reader.onloadend = () => {
+            setImagePreview(reader.result);
+         };
+         reader.readAsDataURL(file);
+      }
+   }
+
+   if (loading) {
+      return <div className="text-center p-10">Carregando...</div>;
+   }
+
+   return (
+      <section id="editar-post" className="lg:container mx-auto pt-8 pb-8">
+         <div className="w-full max-w-4xl mx-auto p-5 bg-cyan-950 rounded-xl mb-10">
+            <form className="text-center flex flex-col items-center gap-3 text-stone-500">
+               <h1 className="text-4xl font-bold mb-4 text-cyan-200">Editar post</h1>
+               <input
+                  placeholder="Titulo"
+                  name="title" 
+                  type="text"
+                  className="w-full bg-cyan-100 placeholder-stone-500 py-1 px-2 rounded-sm"
+                  ref={inputTitle}
+                  defaultValue={post?.title} 
+               />
+               <textarea
+                  placeholder="O que esta pensando?"
+                  name="body"
+                  className="w-full min-h-44 bg-cyan-100 placeholder-stone-500 py-1 px-2 rounded-sm"
+                  ref={inputBody}
+                  defaultValue={post?.body}
+               />
+               
+               <div className="w-full">
+                  <label className="block text-left text-cyan-200 mb-1">Imagem do Post</label>
+                  <input
+                     type="file"
+                     accept="image/*"
+                     className="w-full bg-cyan-100 text-stone-500 py-1 px-2 rounded-sm"
+                     ref={inputImage}
+                     onChange={handleImageChange}
+                  />
+               </div>
+               
+               {imagePreview && (
+                  <div className="w-full mt-2">
+                     <p className="text-left text-cyan-200 mb-1">Imagem atual:</p>
+                     <img 
+                        src={imagePreview.startsWith('data:') ? imagePreview : imagePreview}
+                        alt="Imagem do post" 
+                        className="max-h-60 rounded-md object-contain bg-white p-1" 
+                     />
+                  </div>
+               )}
+
+               <button
+                  className="text-cyan-950 font-semibold bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80 rounded-lg text-md px-5 py-2.5 text-center me-2 mb-2"
+                  type="button"
+                  onClick={updatePost}
+               >
+                  Atualizar
+               </button>
+            </form>
+         </div>
+
+         <div className="w-full max-w-4xl mx-auto p-5 flex justify-center">
+            <Link to="/" className="text-cyan-950 font-semibold bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80 rounded-lg text-md px-5 py-2.5 text-center me-2 mb-2">Cancelar</Link>
+         </div>
+      </section>
+   );
+};
+
+export default EditPost;
